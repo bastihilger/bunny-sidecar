@@ -66,7 +66,7 @@ Optional publish tags: `bunny-sidecar-views`, `bunny-sidecar-lang`, or `bunny-si
 | `path` | `bunny` | URI prefix of the panel (`/bunny/login`) |
 | `domain` | `null` | Optional domain the panel routes are bound to |
 | `middleware` | `['web']` | Middleware wrapping every panel route |
-| `name` | `null` | Brand shown in the panel and mails; falls back to `app.name` |
+| `name` | `Bunny Sidecar` | Brand shown next to the logo, in page titles, and in mails |
 | `guard` | `bunny-sidecar` | Name of the auth guard, provider and password broker the package registers |
 | `mail.queue` | `false` | Queue invitation mails instead of sending them synchronously |
 | `api.base_url` | `https://api.bunny.net` | bunny.net API base URL |

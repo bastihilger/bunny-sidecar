@@ -28,12 +28,11 @@ return [
     | Brand
     |--------------------------------------------------------------------------
     |
-    | Shown in the panel header, on the login page, and in emails. Defaults to
-    | the application name when null.
+    | Shown next to the logo in the navigation, in page titles, and in emails.
     |
     */
 
-    'name' => null,
+    'name' => 'Bunny Sidecar',
 
     /*
     |--------------------------------------------------------------------------

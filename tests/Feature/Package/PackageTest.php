@@ -8,6 +8,7 @@ use BunnySidecar\BunnySidecar\Access\ZoneAccess;
 use BunnySidecar\BunnySidecar\BunnySidecar;
 use BunnySidecar\BunnySidecar\BunnySidecarServiceProvider;
 use BunnySidecar\BunnySidecar\Facades\BunnySidecar as BunnySidecarFacade;
+use BunnySidecar\BunnySidecar\Models\User;
 use Livewire\Features\SupportDisablingBackButtonCache\SupportDisablingBackButtonCache;
 use Livewire\Livewire;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -27,12 +28,32 @@ test('the config is merged with sane defaults', function (): void {
         ->and(config('bunny-sidecar.mail.queue'))->toBeFalse();
 });
 
-test('the brand name falls back to the application name', function (): void {
-    config(['app.name' => 'Host App', 'bunny-sidecar.name' => null]);
-    expect(app(BunnySidecar::class)->name())->toBe('Host App');
+test('the brand name defaults to Bunny Sidecar and is configurable', function (): void {
+    expect(app(BunnySidecar::class)->name())->toBe('Bunny Sidecar');
+
+    config(['bunny-sidecar.name' => null]);
+    expect(app(BunnySidecar::class)->name())->toBe('Bunny Sidecar');
 
     config(['bunny-sidecar.name' => 'DNS Desk']);
     expect(app(BunnySidecar::class)->name())->toBe('DNS Desk');
+});
+
+test('the auth pages show the configured brand underneath the logo', function (): void {
+    $this->get(route('bunny-sidecar.login'))->assertOk()->assertSee('Bunny Sidecar');
+
+    config(['bunny-sidecar.name' => 'DNS Desk']);
+
+    $this->get(route('bunny-sidecar.password.request'))->assertOk()->assertSee('DNS Desk')->assertDontSee('Bunny Sidecar');
+});
+
+test('the navigation shows the configured brand next to the logo', function (): void {
+    $this->actingAsPanelUser(User::factory()->create());
+
+    $this->get(route('bunny-sidecar.zones.index'))->assertOk()->assertSee('Bunny Sidecar');
+
+    config(['bunny-sidecar.name' => 'DNS Desk']);
+
+    $this->get(route('bunny-sidecar.zones.index'))->assertOk()->assertSee('DNS Desk')->assertDontSee('Bunny Sidecar');
 });
 
 test('every panel route lives under the prefix', function (): void {

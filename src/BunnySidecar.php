@@ -58,13 +58,13 @@ class BunnySidecar
     }
 
     /**
-     * The brand name shown in the panel and in mails.
+     * The brand name shown next to the logo, in page titles, and in mails.
      */
     public function name(): string
     {
         $name = config('bunny-sidecar.name');
 
-        return is_string($name) && $name !== '' ? $name : config()->string('app.name', 'Laravel');
+        return is_string($name) && $name !== '' ? $name : 'Bunny Sidecar';
     }
 
     public function path(): string

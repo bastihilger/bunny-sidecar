@@ -32,7 +32,7 @@ The installer publishes `config/bunny-sidecar.php` and the migration, runs `migr
 Edit the published `config/bunny-sidecar.php`:
 
 - `path` (default `bunny`): the panel lives at `/{path}`, login at `/{path}/login`. `domain` and `middleware` (default `['web']`) adjust the route group.
-- `name`: brand in the panel and mails; `null` falls back to `app.name`.
+- `name` (default `Bunny Sidecar`): brand shown next to the logo, in page titles, and in mails.
 - `guard` (default `bunny-sidecar`): the package registers `auth.guards.{guard}`, `auth.providers.{guard}` (Eloquent, `BunnySidecar\BunnySidecar\Models\User`) and `auth.passwords.{guard}` unless the app already defines them.
 - `mail.queue`: set `true` only when a queue worker runs; otherwise mails are sent synchronously.
 - `api.*`: bunny.net base URL and cache TTLs.
