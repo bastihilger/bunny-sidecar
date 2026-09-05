@@ -15,6 +15,16 @@ use Illuminate\Support\Facades\Auth;
 class BunnySidecar
 {
     /**
+     * Static assets shipped in resources/dist, keyed by file name with their content type.
+     *
+     * @var array<string, string>
+     */
+    public const array ASSETS = [
+        'bunny-sidecar.css' => 'text/css; charset=utf-8',
+        'favicon.svg' => 'image/svg+xml',
+    ];
+
+    /**
      * The name of the session guard panel users authenticate with.
      */
     public function guard(): string
@@ -77,14 +87,27 @@ class BunnySidecar
      */
     public function stylesheetUrl(): string
     {
-        $modified = filemtime($this->stylesheetPath());
-
-        return route('bunny-sidecar.assets.css', ['v' => $modified === false ? 0 : $modified]);
+        return $this->assetUrl('bunny-sidecar.css');
     }
 
-    public function stylesheetPath(): string
+    public function faviconUrl(): string
     {
-        return dirname(__DIR__).'/resources/dist/bunny-sidecar.css';
+        return $this->assetUrl('favicon.svg');
+    }
+
+    /**
+     * A versioned URL of one of the package's static assets (see ASSETS).
+     */
+    public function assetUrl(string $asset): string
+    {
+        $modified = filemtime($this->assetPath($asset));
+
+        return route('bunny-sidecar.assets', ['asset' => $asset, 'v' => $modified === false ? 0 : $modified]);
+    }
+
+    public function assetPath(string $asset): string
+    {
+        return dirname(__DIR__).'/resources/dist/'.$asset;
     }
 
     /**

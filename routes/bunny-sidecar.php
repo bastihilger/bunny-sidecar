@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use BunnySidecar\BunnySidecar\BunnySidecar;
+use BunnySidecar\BunnySidecar\Http\Controllers\AssetController;
 use BunnySidecar\BunnySidecar\Http\Controllers\HomeController;
 use BunnySidecar\BunnySidecar\Http\Controllers\LogoutController;
-use BunnySidecar\BunnySidecar\Http\Controllers\StylesheetController;
 use BunnySidecar\BunnySidecar\Http\Middleware\Authenticate;
 use BunnySidecar\BunnySidecar\Http\Middleware\EnsureUserIsAdmin;
 use BunnySidecar\BunnySidecar\Http\Middleware\RedirectIfAuthenticated;
@@ -24,8 +24,9 @@ use BunnySidecar\BunnySidecar\Livewire\Zones\Index as ZonesIndex;
 use BunnySidecar\BunnySidecar\Livewire\Zones\Show as ZonesShow;
 use Illuminate\Support\Facades\Route;
 
-Route::get('bunny-sidecar/assets/bunny-sidecar.css', StylesheetController::class)
-    ->name('bunny-sidecar.assets.css');
+Route::get('bunny-sidecar/assets/{asset}', AssetController::class)
+    ->where('asset', '[a-z0-9.\-]+')
+    ->name('bunny-sidecar.assets');
 
 Route::group(app(BunnySidecar::class)->routeGroupAttributes(), function (): void {
     Route::get('/', HomeController::class)->name('home');

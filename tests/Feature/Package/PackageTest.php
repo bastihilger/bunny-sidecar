@@ -10,6 +10,7 @@ use BunnySidecar\BunnySidecar\BunnySidecarServiceProvider;
 use BunnySidecar\BunnySidecar\Facades\BunnySidecar as BunnySidecarFacade;
 use Livewire\Features\SupportDisablingBackButtonCache\SupportDisablingBackButtonCache;
 use Livewire\Livewire;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 test('the package services are bound', function (): void {
     expect(app(BunnySidecar::class))->toBe(app(BunnySidecar::class))
@@ -40,19 +41,36 @@ test('every panel route lives under the prefix', function (): void {
     }
 });
 
-test('the precompiled stylesheet is served from the package', function (): void {
+test('the precompiled stylesheet and favicon are served from the package', function (): void {
     // Livewire flags responses after a component rendered; reset the static
     // flag so a page test earlier in the process cannot clobber the headers.
     SupportDisablingBackButtonCache::$disableBackButtonCache = false;
 
-    $url = app(BunnySidecar::class)->stylesheetUrl();
+    $sidecar = app(BunnySidecar::class);
 
-    expect($url)->toContain('/bunny-sidecar/assets/bunny-sidecar.css?v=');
+    expect($sidecar->stylesheetUrl())->toContain('/bunny-sidecar/assets/bunny-sidecar.css?v=')
+        ->and($sidecar->faviconUrl())->toContain('/bunny-sidecar/assets/favicon.svg?v=');
 
-    $this->get($url)
+    $this->get($sidecar->stylesheetUrl())
         ->assertOk()
         ->assertHeader('Content-Type', 'text/css; charset=utf-8')
         ->assertHeader('Cache-Control', 'immutable, max-age=31536000, public');
+
+    $favicon = $this->get($sidecar->faviconUrl())
+        ->assertOk()
+        ->assertHeader('Content-Type', 'image/svg+xml')
+        ->baseResponse;
+
+    expect($favicon)->toBeInstanceOf(BinaryFileResponse::class)
+        ->and($favicon->getFile()->getFilename())->toBe('favicon.svg');
+
+    $this->get('/bunny-sidecar/assets/composer.json')->assertNotFound();
+});
+
+test('every panel page links the carrot favicon', function (): void {
+    $this->get(route('bunny-sidecar.login'))
+        ->assertOk()
+        ->assertSee('rel="icon" href="'.url('/bunny-sidecar/assets/favicon.svg'), escape: false);
 });
 
 test('all livewire components are registered under their aliases', function (): void {

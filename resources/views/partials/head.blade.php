@@ -4,5 +4,6 @@
 
 <title>{{ filled($title ?? null) ? $title.' - '.$sidecar->name() : $sidecar->name() }}</title>
 
+<link rel="icon" href="{{ $sidecar->faviconUrl() }}" type="image/svg+xml">
 <link rel="stylesheet" href="{{ $sidecar->stylesheetUrl() }}">
 @fluxAppearance

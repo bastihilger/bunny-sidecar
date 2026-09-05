@@ -8,7 +8,7 @@
             <div class="flex w-full max-w-sm flex-col gap-2">
                 <a href="{{ route('bunny-sidecar.home') }}" class="flex flex-col items-center gap-2 font-medium" wire:navigate>
                     <span class="mb-1 flex h-9 w-9 items-center justify-center rounded-md">
-                        <x-bunny-sidecar::logo-icon class="size-9 fill-current text-black dark:text-white" />
+                        <x-bunny-sidecar::logo-icon class="size-9 text-black dark:text-white" />
                     </span>
                     <span class="sr-only">{{ app(\BunnySidecar\BunnySidecar\BunnySidecar::class)->name() }}</span>
                 </a>

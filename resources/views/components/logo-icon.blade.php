@@ -1,8 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" {{ $attributes }}>
-    <path
-        fill="currentColor"
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M464-48L440.6-24.6c-31.2 31.2-31.2 81.9 0 113.1 15.6 15.6 31.2 31.2 46.9 46.9 31.2 31.2 81.9 31.2 113.1 0L624 112 600.6 88.6c-31.2-31.2-81.9-31.2-113.1 0 31.2-31.2 31.2-81.9 0-113.1L464-48zM332.3 96c-45.5 0-87.6 20.8-115.2 55.2 43.7 43.7 68 68 72.8 72.8L256 257.9c-6.4-6.4-27.5-27.5-63.4-63.4-86.5 201.8-133.7 311.9-141.6 330.3 40.9-17.5 106.2-45.5 195.9-84-30.5-30.5-49.5-49.5-57-57L224 350.1c5.2 5.2 28.7 28.7 70.5 70.5l95.9-41.1C444.8 356.2 480 302.8 480 243.7 480 162.1 413.9 96 332.3 96z"
-    />
+{{-- Carrot icon from Lucide (https://lucide.dev), ISC License, Copyright (c) Lucide Contributors --}}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" {{ $attributes }}>
+    <path d="M15 16a1 1 0 0 0-7-7q-4 4-5.987 12.385a.5.5 0 0 0 .602.602Q11 20 15 16l-3-3" />
+    <path d="M15 9q4 4 7 0-3-4-7 0 4-4 0-7-4 3 0 7" />
+    <path d="m8 15-2.58-2.58" />
 </svg>

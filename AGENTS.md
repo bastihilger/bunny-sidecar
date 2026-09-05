@@ -36,7 +36,7 @@ Everything the host app sees is wired in `src/BunnySidecarServiceProvider.php`:
 
 - `register()` merges the config, binds `BunnySidecar` (singleton) plus the request-scoped access services, and registers the panel's own session guard, Eloquent user provider, and password broker under the configured guard name unless the host already defines them.
 - `boot()` loads views (`bunny-sidecar::`), translations, and `routes/bunny-sidecar.php`, registers every Livewire component under a `bunny-sidecar.*` alias (see `COMPONENTS`), marks the panel middleware as Livewire persistent middleware, and shares `$user` with the app layout. Console-only work (publish tags, commands) sits behind `runningInConsole()`.
-- Publish tags: `bunny-sidecar-{config,views,lang,migrations}` plus the umbrella `bunny-sidecar`. There is no assets tag: `StylesheetController` serves the precompiled CSS.
+- Publish tags: `bunny-sidecar-{config,views,lang,migrations}` plus the umbrella `bunny-sidecar`. There is no assets tag: `AssetController` serves the precompiled CSS and the favicon from `resources/dist` (whitelist in `BunnySidecar::ASSETS`).
 
 Auth isolation is the core design: panel users are `Models\User` rows in `bunny_sidecar_users` on the `bunny-sidecar` guard. `Http\Middleware\Authenticate` requires that guard and calls `Auth::shouldUse()` so `auth()` resolves panel users inside panel requests; components still resolve the user through `BunnySidecar::currentUser()` (trait `ResolvesCurrentUser`) so `Livewire::test()` works without route middleware. Tests authenticate with `actingAsPanelUser()`.
 

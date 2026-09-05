@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static string loginUrl()
  * @method static string homeUrl()
  * @method static string stylesheetUrl()
+ * @method static string faviconUrl()
+ * @method static string assetUrl(string $asset)
  *
  * @see \BunnySidecar\BunnySidecar\BunnySidecar
  */
