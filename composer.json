@@ -1,9 +1,13 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
     "name": "bastihilger/bunny-sidecar",
-    "description": "An admin panel providing some missing bunny.net features",
+    "description": "Share selected bunny.net DNS zones with people who should not see the rest of your bunny.net account, from a self-contained admin panel inside your Laravel app.",
     "keywords": [
         "laravel",
+        "bunny",
+        "bunny.net",
+        "dns",
+        "livewire",
         "bastihilger",
         "bunny-sidecar"
     ],
@@ -18,7 +22,9 @@
     ],
     "require": {
         "php": "^8.3",
-        "illuminate/support": "^12.0||^13.0"
+        "illuminate/support": "^12.0||^13.0",
+        "livewire/flux": "^2.13",
+        "livewire/livewire": "^4.1"
     },
     "require-dev": {
         "larastan/larastan": "^3.9",
@@ -38,6 +44,7 @@
     "autoload-dev": {
         "psr-4": {
             "BunnySidecar\\BunnySidecar\\Tests\\": "tests/",
+            "BunnySidecar\\BunnySidecar\\Database\\Factories\\": "database/factories/",
             "Workbench\\App\\": "workbench/app/",
             "Workbench\\Database\\Factories\\": "workbench/database/factories/",
             "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"

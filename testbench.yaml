@@ -1,16 +1,18 @@
 laravel: '@testbench'
 
 providers:
-  # - Workbench\App\Providers\WorkbenchServiceProvider
+  - BunnySidecar\BunnySidecar\BunnySidecarServiceProvider
+  - Workbench\App\Providers\WorkbenchServiceProvider
 
 migrations:
+  - database/migrations
   - workbench/database/migrations
 
 seeders:
   - Workbench\Database\Seeders\DatabaseSeeder
 
 workbench:
-  start: '/'
+  start: '/bunny'
   install: true
   health: false
   discovers:

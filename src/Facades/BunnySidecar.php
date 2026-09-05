@@ -7,6 +7,16 @@ namespace BunnySidecar\BunnySidecar\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static string guard()
+ * @method static \Illuminate\Contracts\Auth\StatefulGuard auth()
+ * @method static \BunnySidecar\BunnySidecar\Models\User|null user()
+ * @method static \BunnySidecar\BunnySidecar\Models\User currentUser()
+ * @method static string name()
+ * @method static string path()
+ * @method static string loginUrl()
+ * @method static string homeUrl()
+ * @method static string stylesheetUrl()
+ *
  * @see \BunnySidecar\BunnySidecar\BunnySidecar
  */
 class BunnySidecar extends Facade

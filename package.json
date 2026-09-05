@@ -1,0 +1,13 @@
+{
+    "$schema": "https://www.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "tailwindcss -i resources/css/bunny-sidecar.css -o resources/dist/bunny-sidecar.css --minify",
+        "dev": "tailwindcss -i resources/css/bunny-sidecar.css -o resources/dist/bunny-sidecar.css --watch"
+    },
+    "devDependencies": {
+        "@tailwindcss/cli": "^4.1.11",
+        "tailwindcss": "^4.1.11"
+    }
+}
