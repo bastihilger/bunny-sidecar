@@ -17,9 +17,11 @@ use BunnySidecar\BunnySidecar\Livewire\Auth\AcceptInvitation;
 use BunnySidecar\BunnySidecar\Livewire\Auth\ForgotPassword;
 use BunnySidecar\BunnySidecar\Livewire\Auth\Login;
 use BunnySidecar\BunnySidecar\Livewire\Auth\ResetPassword;
+use BunnySidecar\BunnySidecar\Livewire\Auth\TwoFactorChallenge;
 use BunnySidecar\BunnySidecar\Livewire\Dns\RecordForm;
 use BunnySidecar\BunnySidecar\Livewire\Settings\Password as SettingsPassword;
 use BunnySidecar\BunnySidecar\Livewire\Settings\Profile as SettingsProfile;
+use BunnySidecar\BunnySidecar\Livewire\Settings\TwoFactor as SettingsTwoFactor;
 use BunnySidecar\BunnySidecar\Livewire\Shield\Events as ShieldEvents;
 use BunnySidecar\BunnySidecar\Livewire\Users\Edit as UsersEdit;
 use BunnySidecar\BunnySidecar\Livewire\Users\Index as UsersIndex;
@@ -45,6 +47,7 @@ class BunnySidecarServiceProvider extends ServiceProvider
         'bunny-sidecar.auth.forgot-password' => ForgotPassword::class,
         'bunny-sidecar.auth.reset-password' => ResetPassword::class,
         'bunny-sidecar.auth.accept-invitation' => AcceptInvitation::class,
+        'bunny-sidecar.auth.two-factor-challenge' => TwoFactorChallenge::class,
         'bunny-sidecar.zones.index' => ZonesIndex::class,
         'bunny-sidecar.zones.show' => ZonesShow::class,
         'bunny-sidecar.dns.record-form' => RecordForm::class,
@@ -55,6 +58,7 @@ class BunnySidecarServiceProvider extends ServiceProvider
         'bunny-sidecar.users.edit' => UsersEdit::class,
         'bunny-sidecar.settings.profile' => SettingsProfile::class,
         'bunny-sidecar.settings.password' => SettingsPassword::class,
+        'bunny-sidecar.settings.two-factor' => SettingsTwoFactor::class,
     ];
 
     /**

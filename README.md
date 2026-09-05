@@ -17,6 +17,8 @@ bunny.net has no built-in way to give someone access to just a few DNS zones. Bu
 - **Admins** add bunny.net accounts (name + API key), invite users by email, review WAF (Shield) events, and manage everything.
 - **Members** only see the DNS zones an admin connected to them — read-only by default, with granular write grants per zone: for each scope (zone root / subdomains) either all record types or a selected subset. Members may edit and delete the records they created; admins can additionally assign them as managers of individual records.
 
+Users can protect their panel account with **two-factor authentication** (any TOTP authenticator app, plus one-time recovery codes).
+
 Panel users live in their **own table and auth guard**. A member can log in to the panel but never to your application, and your application's users have no access to the panel.
 
 DNS zones and records are always read live from the bunny.net API (with short caches). Only panel users, bunny.net accounts, zone grants, and invitations are stored locally. API keys are stored encrypted.
@@ -68,6 +70,8 @@ Optional publish tags: `bunny-sidecar-views`, `bunny-sidecar-lang`, or `bunny-si
 | `middleware` | `['web']` | Middleware wrapping every panel route |
 | `name` | `Bunny Sidecar` | Brand shown next to the logo, in page titles, and in mails |
 | `guard` | `bunny-sidecar` | Name of the auth guard, provider and password broker the package registers |
+| `two_factor.enabled` | `true` | Offer authenticator-app two-factor authentication to panel users |
+| `two_factor.window` | `1` | Number of 30-second steps accepted around the current code |
 | `mail.queue` | `false` | Queue invitation mails instead of sending them synchronously |
 | `api.base_url` | `https://api.bunny.net` | bunny.net API base URL |
 | `api.zones_ttl` | `300` | Seconds the zone list per account is cached |
@@ -81,6 +85,7 @@ The guard, user provider, and password broker are only registered if your `confi
 - Panel users are `BunnySidecar\BunnySidecar\Models\User` rows in `bunny_sidecar_users`, authenticated by the `bunny-sidecar` session guard.
 - The panel's own `auth`, `guest`, and `admin` middleware are bound to that guard. Your app's `auth` middleware never accepts a panel user, and a user of your app is never accepted by the panel.
 - Within panel requests the package guard becomes the default guard, so `auth()->user()` resolves the panel user there.
+- Two-factor authentication is per user and optional: users enable it under **Settings → Two-factor**, confirm it with a code, and receive eight recovery codes. Secrets and codes are stored encrypted.
 
 ## Commands
 

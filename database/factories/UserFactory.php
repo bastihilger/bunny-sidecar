@@ -9,6 +9,7 @@ use BunnySidecar\BunnySidecar\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use PragmaRX\Google2FA\Google2FA;
 
 /**
  * @extends Factory<User>
@@ -41,5 +42,17 @@ class UserFactory extends Factory
     public function member(): static
     {
         return $this->state(fn (array $attributes): array => ['role' => UserRole::Member]);
+    }
+
+    /**
+     * A confirmed authenticator app with the recovery codes "recovery-code-1" to "recovery-code-8".
+     */
+    public function withTwoFactor(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'two_factor_secret' => app(Google2FA::class)->generateSecretKey(),
+            'two_factor_recovery_codes' => array_map(fn (int $i): string => "recovery-code-{$i}", range(1, 8)),
+            'two_factor_confirmed_at' => now(),
+        ]);
     }
 }

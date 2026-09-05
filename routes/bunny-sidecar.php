@@ -14,8 +14,10 @@ use BunnySidecar\BunnySidecar\Livewire\Auth\AcceptInvitation;
 use BunnySidecar\BunnySidecar\Livewire\Auth\ForgotPassword;
 use BunnySidecar\BunnySidecar\Livewire\Auth\Login;
 use BunnySidecar\BunnySidecar\Livewire\Auth\ResetPassword;
+use BunnySidecar\BunnySidecar\Livewire\Auth\TwoFactorChallenge;
 use BunnySidecar\BunnySidecar\Livewire\Settings\Password as SettingsPassword;
 use BunnySidecar\BunnySidecar\Livewire\Settings\Profile as SettingsProfile;
+use BunnySidecar\BunnySidecar\Livewire\Settings\TwoFactor as SettingsTwoFactor;
 use BunnySidecar\BunnySidecar\Livewire\Shield\Events as ShieldEvents;
 use BunnySidecar\BunnySidecar\Livewire\Users\Edit as UsersEdit;
 use BunnySidecar\BunnySidecar\Livewire\Users\Index as UsersIndex;
@@ -35,6 +37,7 @@ Route::group(app(BunnySidecar::class)->routeGroupAttributes(), function (): void
         Route::get('login', Login::class)->name('login');
         Route::get('password/request', ForgotPassword::class)->name('password.request');
         Route::get('password/reset/{token}', ResetPassword::class)->name('password.reset');
+        Route::get('two-factor/challenge', TwoFactorChallenge::class)->name('two-factor.login');
         Route::get('invitation/{token}', AcceptInvitation::class)->name('invitations.accept');
     });
 
@@ -48,6 +51,7 @@ Route::group(app(BunnySidecar::class)->routeGroupAttributes(), function (): void
 
         Route::get('settings/profile', SettingsProfile::class)->name('profile.edit');
         Route::get('settings/password', SettingsPassword::class)->name('password.edit');
+        Route::get('settings/two-factor', SettingsTwoFactor::class)->name('two-factor.edit');
 
         Route::middleware(EnsureUserIsAdmin::class)->group(function (): void {
             Route::get('accounts', AccountsIndex::class)->name('accounts.index');

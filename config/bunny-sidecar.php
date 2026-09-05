@@ -55,6 +55,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Two-Factor Authentication
+    |--------------------------------------------------------------------------
+    |
+    | Panel users may protect their account with a TOTP authenticator app
+    | (Google Authenticator, 1Password, ...) plus recovery codes. Disable the
+    | feature to hide the settings page and skip the challenge at login. The
+    | window is the number of 30-second steps accepted around the current one.
+    |
+    */
+
+    'two_factor' => [
+        'enabled' => true,
+        'window' => 1,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Mail
     |--------------------------------------------------------------------------
     |

@@ -34,6 +34,7 @@ Edit the published `config/bunny-sidecar.php`:
 - `path` (default `bunny`): the panel lives at `/{path}`, login at `/{path}/login`. `domain` and `middleware` (default `['web']`) adjust the route group.
 - `name` (default `Bunny Sidecar`): brand shown next to the logo, in page titles, and in mails.
 - `guard` (default `bunny-sidecar`): the package registers `auth.guards.{guard}`, `auth.providers.{guard}` (Eloquent, `BunnySidecar\BunnySidecar\Models\User`) and `auth.passwords.{guard}` unless the app already defines them.
+- `two_factor.enabled` (default `true`): offers authenticator-app 2FA with recovery codes under Settings → Two-factor; set `false` to hide it and skip the login challenge.
 - `mail.queue`: set `true` only when a queue worker runs; otherwise mails are sent synchronously.
 - `api.*`: bunny.net base URL and cache TTLs.
 

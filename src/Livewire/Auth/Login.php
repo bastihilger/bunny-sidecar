@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace BunnySidecar\BunnySidecar\Livewire\Auth;
 
+use BunnySidecar\BunnySidecar\Auth\TwoFactorAuthenticator;
 use BunnySidecar\BunnySidecar\BunnySidecar;
+use BunnySidecar\BunnySidecar\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -34,7 +37,7 @@ class Login extends Component
         ];
     }
 
-    public function login(BunnySidecar $sidecar): void
+    public function login(BunnySidecar $sidecar, TwoFactorAuthenticator $twoFactor): void
     {
         $this->validate();
 
@@ -46,13 +49,31 @@ class Login extends Component
             ]);
         }
 
-        if (! $sidecar->auth()->attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+        $credentials = ['email' => $this->email, 'password' => $this->password];
+        $provider = Auth::createUserProvider($sidecar->guard());
+        $user = $provider?->retrieveByCredentials($credentials);
+
+        if ($provider === null || ! $user instanceof User || ! $provider->validateCredentials($user, $credentials)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages(['email' => __('auth.failed')]);
         }
 
         RateLimiter::clear($this->throttleKey());
+
+        if ($twoFactor->isRequiredFor($user)) {
+            // Park the login until the authenticator code has been entered.
+            session()->put([
+                TwoFactorChallenge::SESSION_USER => $user->getKey(),
+                TwoFactorChallenge::SESSION_REMEMBER => $this->remember,
+            ]);
+
+            $this->redirectRoute('bunny-sidecar.two-factor.login', navigate: true);
+
+            return;
+        }
+
+        $sidecar->auth()->login($user, $this->remember);
         session()->regenerate();
 
         $this->redirectIntended(default: $sidecar->homeUrl(), navigate: true);
